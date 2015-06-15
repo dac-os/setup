@@ -13,7 +13,7 @@ mongoose.connect('mongodb://localhost:27017/dacos-courses');
 
 async.series([function (next) {
     console.log('saving courses...');
-    async.each(read_file("./data/CursoCatalogo.csv"), function (line, next) {
+    async.each(read_file("/data/CursoCatalogo.csv"), function (line, next) {
         Course.update({'code' : (line[1] || '')}, {
             'code'  : (line[1] || ''),
             'name'  : (line[3] || '').trim(),
@@ -23,7 +23,7 @@ async.series([function (next) {
 }, function (next) {
     async.series([function (next) {
         console.log('saving disciplines...');
-        async.each(read_file("./data/CadastroDisciplinas.csv"), function (line, next) {
+        async.each(read_file("/data/CadastroDisciplinas.csv"), function (line, next) {
             Discipline.update({'code' : line[0]}, {
                 'code'       : line[0],
                 'name'       : (line[2] || '').trim(),
@@ -34,7 +34,7 @@ async.series([function (next) {
         }, next);
     }, function (next) {
         console.log('-> saving unities...');
-        async.each(read_file("./data/CadastroUnidades.csv"), function (line, next) {
+        async.each(read_file("/data/CadastroUnidades.csv"), function (line, next) {
             var query = Discipline.find();
             query.where('department', line[0]);
             query.exec(function (error, queries) {
@@ -45,17 +45,17 @@ async.series([function (next) {
         }, next);
     }, function (next) {
         console.log('-> saving descriptions...');
-        async.each(read_file("./data/EmentaDisciplinas.csv"), function (line, next) {
+        async.each(read_file("/data/EmentaDisciplinas.csv"), function (line, next) {
             Discipline.update({'code' : line[0]}, {'description' : (line[2] || '')}, next);
         }, next);
     }, function (next) {
         console.log('-> saving credits...');
-        async.each(read_file("./data/CargaHorariaDisciplinasCatalogo.csv"), function (line, next) {
+        async.each(read_file("/data/CargaHorariaDisciplinasCatalogo.csv"), function (line, next) {
             Discipline.update({'code' : line[1]}, {'credits' : (line[3] || '')}, next);
         }, next);
     }, function (next) {
         console.log('-> saving requirements...');
-        async.each(read_file("./data/PreRequisito.csv"), function (line, next) {
+        async.each(read_file("/data/PreRequisito.csv"), function (line, next) {
             if (line[3] !== '') return next();
             if (line[4] === '') return next();
             var query = Discipline.find();
@@ -70,7 +70,7 @@ async.series([function (next) {
 }, function (next) {
     async.series([function (next) {
         console.log('saving offerings...');
-        async.each(read_file("./data/DisciplinasTurmasOferecidas.csv"), function (line, next) {
+        async.each(read_file("/data/DisciplinasTurmasOferecidas.csv"), function (line, next) {
             var query = Discipline.findOne();
             query.where('code', line[3]);
             query.exec(function (error, id) {
@@ -88,7 +88,7 @@ async.series([function (next) {
         }, next);
      }, function (next) {
         console.log('-> saving schedules...');
-        async.each(read_file("./data/HorarioDisciplinasTurmasOferecidas.csv"), function (line, next) {
+        async.each(read_file("/data/HorarioDisciplinasTurmasOferecidas.csv"), function (line, next) {
             Offering.update({'code' : line[3], 'class' : (line[5] || '').trim()}, {
                 $push : {'schedules'  : {
                     'weekday'   : line[6], 
@@ -101,7 +101,7 @@ async.series([function (next) {
 }, function (next) {
     async.series([function (next) {
         console.log('saving catalogs...');
-        async.each(read_file("./data/CursoCatalogo.csv"), function (line, next) {
+        async.each(read_file("/data/CursoCatalogo.csv"), function (line, next) {
             Catalog.update({'year' : line[0]}, {
                 'year' : line[0]
             }, {'upsert' : true}, next);
@@ -110,7 +110,7 @@ async.series([function (next) {
 }, function (next) {
     async.series([function (next) {
         console.log('saving modalities...');
-        async.each(read_file("./data/CursoHabilitacaoCatalogo.csv"), function (line, next) {
+        async.each(read_file("/data/CursoHabilitacaoCatalogo.csv"), function (line, next) {
             var query = Catalog.findOne();
             query.where('year', line[0]);
             query.exec(function (error, id) {
@@ -140,7 +140,7 @@ async.series([function (next) {
 }, function (next) {
     async.series([function (next) {
         console.log('saving blocks 1...');
-        async.each(read_file("./data/CurriculoEletivoComum.csv"), function (line, next) {
+        async.each(read_file("/data/CurriculoEletivoComum.csv"), function (line, next) {
             var query = Catalog.find();
             query.where('year', line[0]);
             query.exec(function (error, ids) {
@@ -184,7 +184,7 @@ async.series([function (next) {
         }, next);
     },  function (next) {
         console.log('saving blocks 2...');
-        async.each(read_file("./data/Curriculo_Obrigatorias_comuns.csv"), function (line, next) {
+        async.each(read_file("/data/Curriculo_Obrigatorias_comuns.csv"), function (line, next) {
             var query = Catalog.find();
             query.where('year', line[0]);
             query.exec(function (error, ids) {
@@ -219,7 +219,7 @@ async.series([function (next) {
         }, next);
     }, function (next) {
         console.log('saving blocks 3...');
-        async.each(read_file("./data/CurriculoEletivoEspecifico.csv"), function (line, next) {
+        async.each(read_file("/data/CurriculoEletivoEspecifico.csv"), function (line, next) {
             var query = Catalog.find();
             query.where('year', line[0]);
             query.exec(function (error, ids) {
@@ -262,7 +262,7 @@ async.series([function (next) {
         }, next);
     }, function (next) {
         console.log('saving blocks 4...');
-        async.each(read_file("./data/Curriculo_Obrigatorio_Especifico.csv"), function (line, next) {
+        async.each(read_file("/data/Curriculo_Obrigatorio_Especifico.csv"), function (line, next) {
             var query = Catalog.find();
             query.where('year', line[0]);
             query.exec(function (error, ids) {
@@ -297,7 +297,7 @@ async.series([function (next) {
         }, next);
      }, function (next) {
         console.log('-> saving suggested semester...');
-        async.each(read_file("./data/SugestaoParaCumprimentoCurriculo.csv"), function (line, next) {
+        async.each(read_file("/data/SugestaoParaCumprimentoCurriculo.csv"), function (line, next) {
             if(line[7].slice(4) == ' ') return next();
             var query = Catalog.find();
             query.where('year', line[0]);
@@ -334,7 +334,7 @@ async.series([function (next) {
 function read_file(file){
     var fs = require("fs"); 
     var dados = [];
-    var texto = fs.readFileSync(file, 'UTF-8');
+    var texto = fs.readFileSync(__dirname + file, 'UTF-8');
     var linha = texto.split("\n");
     for(var i=1;i<linha.length;i++){
         var valor = linha[i].split(";");
