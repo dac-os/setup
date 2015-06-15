@@ -1,0 +1,18 @@
+Especificações dos requisitos e casos de uso do sistem DAC-OS.
+
+Autenticação:
+	Perfis
+		O sistema de gerenciamento de perfis contempla um conjunto de categorias de acesso ao sistema, cada um dos perfis possui uma coleção de permissões que autorizam o usuário consultar, inserir, modificar e remover determinadas entidades e recursos do sistema. Todos os demais sistemas precisam a todo instante se comunicar com o sistema de autenticação para determinar o perfil do usuário e permitir ou negar determinada operação no sistema. 
+	Usuários
+		O sistema de gerenciamento de usuários permite a consulta, inserção, modificação e remoção de usuários no sistema, além de também prover uma implementação do algoritmo de damm para que sejam gerados registros academicos para todos os usuários do sistema.
+
+Catálogo:
+	Catálogos
+	Oferecimentos
+
+Matrícula
+
+Calendário
+
+Histórico Escolar
+

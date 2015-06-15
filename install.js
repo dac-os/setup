@@ -1,5 +1,9 @@
 require('shelljs/global');
  
+var nconf;
+
+nconf = require('nconf');
+
 if (!which('git')) {
   echo('Sorry, this script requires git');
   exit(1);
@@ -24,11 +28,7 @@ exec('npm install --prefix ../auth ../auth');
 exec('git clone https://github.com/dac-os/courses ../courses');
 exec('npm install --prefix ../courses ../courses');
 
-exec('git clone https://github.com/dac-os/enrollment ../enrollment');
-exec('npm install --prefix ../enrollment ../enrollment');
-
 exec('git clone https://github.com/dac-os/calendar ../calendar');
 exec('npm install --prefix ../calendar ../calendar');
 
-exec('git clone https://github.com/dac-os/history ../history');
-exec('npm install --prefix ../history ../history');
+require('./migrate/courses.js');
