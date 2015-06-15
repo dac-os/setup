@@ -19,16 +19,16 @@ if (!which('mongo')) {
   exit(1);
 }
 
-exec('git clone https://github.com/dac-os/frontend ../frontend');
-exec('npm install --prefix ../frontend ../frontend');
+if (ls('../frontend').length === 0) exec('git clone https://github.com/dac-os/frontend ../frontend');
+if (ls('../frontend/node_modules').length === 0) exec('npm install --prefix ../frontend ../frontend');
 
-exec('git clone https://github.com/dac-os/auth ../auth');
-exec('npm install --prefix ../auth ../auth');
+if (ls('../auth').length === 0) exec('git clone https://github.com/dac-os/auth ../auth');
+if (ls('../auth/node_modules').length === 0)exec('npm install --prefix ../auth ../auth');
 
-exec('git clone https://github.com/dac-os/courses ../courses');
-exec('npm install --prefix ../courses ../courses');
+if (ls('../courses').length === 0) exec('git clone https://github.com/dac-os/courses ../courses');
+if (ls('../courses/node_modules').length === 0)exec('npm install --prefix ../courses ../courses');
 
-exec('git clone https://github.com/dac-os/calendar ../calendar');
-exec('npm install --prefix ../calendar ../calendar');
+if (ls('../calendar').length === 0) exec('git clone https://github.com/dac-os/calendar ../calendar');
+if (ls('../calendar/node_modules').length === 0)exec('npm install --prefix ../calendar ../calendar');
 
 require('./migrate/courses.js');
