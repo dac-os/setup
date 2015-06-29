@@ -31,4 +31,5 @@ if (ls('../courses/node_modules').length === 0)exec('npm install --prefix ../cou
 if (ls('../calendar').length === 0) exec('git clone https://github.com/dac-os/calendar ../calendar');
 if (ls('../calendar/node_modules').length === 0)exec('npm install --prefix ../calendar ../calendar');
 
+require('./migrate/auth.js');
 require('./migrate/courses.js');
